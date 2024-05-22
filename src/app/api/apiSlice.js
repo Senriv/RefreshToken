@@ -20,8 +20,26 @@ const baseQueryWithReauth = async (args, api, extraOptions) => {
   if (result?.error?.status === 401) {
     console.log('В функции ошибки');
     console.log('sending refresh token');
+
+    const state = api.getState();
+    const accessToken = state.auth.token;
+    const refreshToken = state.auth.refreshToken;
+
+    const body = {
+      accessToken: accessToken,
+      refreshToken: refreshToken,
+    };
+
     // send refresh token to get new access token
-    const refreshResult = await baseQuery('User/refresh', api, extraOptions);
+    const refreshResult = await baseQuery(
+      {
+        url: 'User/refresh',
+        method: 'POST',
+        body,
+      },
+      api,
+      extraOptions
+    );
     console.log(refreshResult);
     if (refreshResult?.data) {
       const user = api.getState().auth.user;
