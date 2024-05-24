@@ -2,8 +2,8 @@ import { useRef, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { useDispatch } from 'react-redux';
-import { setCredentials } from './authSlice';
-import { useLoginMutation } from './authApiSlice';
+import { setCredentials } from '../redux/auth/authSlice';
+import { useLoginMutation } from '../redux/auth/authApiSlice';
 
 const Login = () => {
   const userRef = useRef();
@@ -35,7 +35,6 @@ const Login = () => {
       navigate('/welcome');
     } catch (err) {
       if (!err?.originalStatus) {
-        // isLoading: true until timeout occurs
         setErrMsg('No Server Response');
       } else if (err.originalStatus === 400) {
         setErrMsg('Missing Username or Password');

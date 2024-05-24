@@ -1,10 +1,14 @@
 import { Routes, Route } from 'react-router-dom';
+
 import Layout from './components/Layout';
-import Public from './components/Public';
-import Login from './features/auth/Login';
-import Welcome from './features/auth/Welcome';
-import RequireAuth from './features/auth/RequireAuth';
-import AssetsList from './features/asset/assetList';
+import RequireAuth from './components/RequireAuth';
+
+import Public from './pages/Public';
+import Login from './pages/Login';
+import Welcome from './pages/Welcome';
+import AssetsList from './pages/assetList';
+
+
 
 function App() {
   return (

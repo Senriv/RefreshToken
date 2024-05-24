@@ -1,4 +1,4 @@
-import { useGetAssetsQuery } from './assetApiSlice';
+import { useGetAssetsQuery } from '../redux/asset/assetApiSlice';
 import { Link } from 'react-router-dom';
 
 const AssetsList = () => {

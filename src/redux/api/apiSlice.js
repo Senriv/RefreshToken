@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { setCredentials, logOut } from '../../features/auth/authSlice';
+import { setCredentials, logOut } from '../auth/authSlice';
 
 const baseQuery = fetchBaseQuery({
   baseUrl:
@@ -16,21 +16,12 @@ const baseQuery = fetchBaseQuery({
 
 const baseQueryWithReauth = async (args, api, extraOptions) => {
   let result = await baseQuery(args, api, extraOptions);
-  console.log('В функции перехвата');
   if (result?.error?.status === 401) {
-    console.log('В функции ошибки');
-    console.log('sending refresh token');
-
-    const state = api.getState();
-    const accessToken = state.auth.token;
-    const refreshToken = state.auth.refreshToken;
-
     const body = {
-      accessToken: accessToken,
-      refreshToken: refreshToken,
+      accessToken: api.getState().auth.token,
+      refreshToken: api.getState().auth.refreshToken,
     };
 
-    // send refresh token to get new access token
     const refreshResult = await baseQuery(
       {
         url: 'User/refresh',
@@ -40,12 +31,10 @@ const baseQueryWithReauth = async (args, api, extraOptions) => {
       api,
       extraOptions
     );
-    console.log(refreshResult);
+
     if (refreshResult?.data) {
       const user = api.getState().auth.user;
-      // store the new token
       api.dispatch(setCredentials({ ...refreshResult.data, user }));
-      // retry the original query with new access token
       result = await baseQuery(args, api, extraOptions);
     } else {
       api.dispatch(logOut());
