@@ -26,6 +26,9 @@ const Welcome = () => {
       <p>
         <Link to="/assetList">Go to the Assets List</Link>
       </p>
+      <p>
+        <Link to="/addAssets">Go to the Add Assets</Link>
+      </p>
       <button type="button" onClick={handleLogOut} disabled={isLoading}>
         LogOut
       </button>

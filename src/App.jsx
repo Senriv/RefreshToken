@@ -7,8 +7,7 @@ import Public from './pages/Public';
 import Login from './pages/Login';
 import Welcome from './pages/Welcome';
 import AssetsList from './pages/assetList';
-
-
+import AddAssets from './pages/addAssets';
 
 function App() {
   return (
@@ -22,6 +21,7 @@ function App() {
         <Route element={<RequireAuth />}>
           <Route path="welcome" element={<Welcome />} />
           <Route path="assetList" element={<AssetsList />} />
+          <Route path="addAssets" element={<AddAssets />} />
         </Route>
       </Route>
     </Routes>
